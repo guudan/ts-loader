@@ -1,6 +1,7 @@
-var fs = require('fs-extra');
-var path = require('path');
-var mkdirp = require('mkdirp');
+const fs = require('fs-extra');
+const path = require('path');
+const mkdirp = require('mkdirp');
+const copySync = require('./copySync');
 
 fs.readdirSync(__dirname).forEach(function(test) {
     var testPath = path.join(__dirname, test);
@@ -9,10 +10,10 @@ fs.readdirSync(__dirname).forEach(function(test) {
         if (test === 'testLib') return;
         
         // update this manually when a new version comes out
-        var expectedOutput = path.join(testPath, 'expectedOutput-3.4'),
-            newExpectedOutput = path.join(testPath, 'expectedOutput-3.5');
+        var expectedOutput = path.join(testPath, 'expectedOutput-3.5'),
+            newExpectedOutput = path.join(testPath, 'expectedOutput-3.6');
         
         mkdirp.sync(newExpectedOutput);
-        fs.copySync(expectedOutput, newExpectedOutput);
+        copySync(expectedOutput, newExpectedOutput);
     }
 });
